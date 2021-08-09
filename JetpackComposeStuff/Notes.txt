@@ -1,0 +1,25 @@
+Column, Row, Text, Spacer, Card, Box (for stacking items on each other), Image, 
+Scaffold (layout for using already existing material design components like: Snackbars, Toolbar, Navigation Component)
+
+
+modifier = Modifier
+	.fillMaxWidth (fillMaxHeight)
+	.width (Height)
+	.background
+	.padding
+	.offset - similiar as margin
+	.border
+	.clickable {    }
+	.weight (applicable only if inside of a row/column)
+	
+painter = Painter
+
+shape = RoundedCornerShape()
+
+elevation = 5.dp //for shadow
+
+Image (
+	painter = painterResource( id = R.drawable.myPicture),
+	contentDescription = "For deaf people",
+	contentScale = ContentScale.Crop
+}
