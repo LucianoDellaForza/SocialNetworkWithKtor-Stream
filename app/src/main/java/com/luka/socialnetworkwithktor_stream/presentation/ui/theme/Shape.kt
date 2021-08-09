@@ -1,4 +1,4 @@
-package com.luka.socialnetworkwithktor_stream.ui.theme
+package com.luka.socialnetworkwithktor_stream.presentation.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
