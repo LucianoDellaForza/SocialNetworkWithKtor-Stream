@@ -6,10 +6,13 @@ import androidx.navigation.NavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.luka.socialnetworkwithktor_stream.presentation.MainActivity
 import com.luka.socialnetworkwithktor_stream.presentation.ui.theme.SocialNetworkWithKtorStreamTheme
+import com.luka.socialnetworkwithktor_stream.presentation.util.Screen
+import com.luka.socialnetworkwithktor_stream.util.Constants
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.*
 import org.junit.Before
@@ -28,6 +31,8 @@ class SplashScreenTest {
     @RelaxedMockK
     lateinit var navController: NavController
 
+    private val testDispatcher = TestCoroutineDispatcher()
+
     @Before
     fun setUp() {
         MockKAnnotations.init(this) //this initializes navController (above) as a mock
@@ -35,19 +40,24 @@ class SplashScreenTest {
 
     //runBlockingTest - for skipping delays inside of coroutine
     @Test
-    fun splashScreen_displaysAndDisappears() = runBlockingTest {
+    fun splashScreen_displaysAndDisappears() = testDispatcher.runBlockingTest {
         composeTestRule.setContent {
             SocialNetworkWithKtorStreamTheme {
-                SplashScreen(navController = navController)
+                SplashScreen(
+                    navController = navController,
+                    dispatcher = testDispatcher
+                )
             }
         }
         composeTestRule
             .onNodeWithContentDescription("Logo")
             .assertExists()
 
-//        verify {
-//            navController.popBackStack()
-//            navController.navigate(Screen.LoginScreen.route)
-//        }
+        advanceTimeBy(Constants.SPLASH_SCREEN_DURATION)
+
+        verify {
+            navController.popBackStack()
+            navController.navigate(Screen.LoginScreen.route)
+        }
     }
 }

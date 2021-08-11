@@ -1,5 +1,6 @@
 package com.luka.socialnetworkwithktor_stream.presentation.components
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -23,6 +24,7 @@ import com.luka.socialnetworkwithktor_stream.R
 
 @Composable
 fun StandardTextField(
+    modifier: Modifier = Modifier,
     text: String = "",
     hint: String = "",
     maxLength: Int = 40,
@@ -57,11 +59,6 @@ fun StandardTextField(
             VisualTransformation.None
         },
         singleLine = true,
-        modifier = Modifier
-            .fillMaxWidth()
-            .semantics {
-                testTag = "standard_text_field"
-            },
         trailingIcon = {
             if (isPasswordToggleDisplayed) {
                 IconButton(onClick = {
@@ -82,7 +79,8 @@ fun StandardTextField(
                 }
             }
 
-        }
-
+        },
+        modifier = modifier
+            .fillMaxWidth()
     )
 }

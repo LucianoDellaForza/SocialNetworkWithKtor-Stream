@@ -17,11 +17,15 @@ import androidx.navigation.NavController
 import com.luka.socialnetworkwithktor_stream.R
 import com.luka.socialnetworkwithktor_stream.presentation.util.Screen
 import com.luka.socialnetworkwithktor_stream.util.Constants
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 @Composable
 fun SplashScreen(
-    navController: NavController
+    navController: NavController,
+    dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) {
     val scale = remember {
         androidx.compose.animation.core.Animatable(0f)
@@ -31,19 +35,20 @@ fun SplashScreen(
     }
     //key1 - everytime key changes LaunchedEffect block will be fired up (true - only once)
     LaunchedEffect(key1 = true) {
-        scale.animateTo(
-            targetValue = 0.5f,
-            animationSpec = tween(
-                durationMillis = 500,
-                easing = {
-                    overshootInterpolator.getInterpolation(it)
-                }
+        withContext(dispatcher) {
+            scale.animateTo(
+                targetValue = 0.5f,
+                animationSpec = tween(
+                    durationMillis = 500,
+                    easing = {
+                        overshootInterpolator.getInterpolation(it)
+                    }
+                )
             )
-        )
-        delay(Constants.SPLASH_SCREEN_DURATION)
-        navController.popBackStack()
-        navController.navigate(Screen.LoginScreen.route)
-
+            delay(Constants.SPLASH_SCREEN_DURATION)
+            navController.popBackStack()
+            navController.navigate(Screen.LoginScreen.route)
+        }
     }
     Box(
         modifier = Modifier.fillMaxSize(),
