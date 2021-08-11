@@ -42,7 +42,7 @@ fun StandardTextField(
     TextField(
         value = text,
         onValueChange = {
-            if (it.length < maxLength) {
+            if (it.length <= maxLength) {
                 onValueChange(it)
             }
         },
