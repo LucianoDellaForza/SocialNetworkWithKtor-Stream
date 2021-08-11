@@ -13,6 +13,8 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.luka.socialnetworkwithktor_stream.presentation.MainActivity
+import com.luka.socialnetworkwithktor_stream.presentation.util.TestTags
+import io.mockk.MockKAnnotations
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -40,7 +42,26 @@ class StandardTextFieldTest {
                     maxLength = 5,
                     modifier = Modifier
                         .semantics {
-                            testTag = "standard_text_field"
+                            testTag = TestTags.STANDARD_TEXT_FIELD
+                        }
+                )
+            }
+        }
+
+        composeTestRule.setContent {
+            var text by remember {
+                mutableStateOf("")
+            }
+            MaterialTheme {
+                StandardTextField(
+                    text = text,
+                    onValueChange = {
+                        text = it
+                    },
+                    maxLength = 5,
+                    modifier = Modifier
+                        .semantics {
+                            testTag = TestTags.STANDARD_TEXT_FIELD
                         }
                 )
             }
@@ -48,17 +69,46 @@ class StandardTextFieldTest {
 
         val expectedString = "12345"
         composeTestRule
-            .onNodeWithTag("standard_text_field")
+            .onNodeWithTag(TestTags.STANDARD_TEXT_FIELD)
             .performTextClearance()
         composeTestRule
-            .onNodeWithTag("standard_text_field")
+            .onNodeWithTag(TestTags.STANDARD_TEXT_FIELD)
             .performTextInput(expectedString)
         composeTestRule
-            .onNodeWithTag("standard_text_field")
+            .onNodeWithTag(TestTags.STANDARD_TEXT_FIELD)
             .performTextInput("6")
 
         composeTestRule
-            .onNodeWithTag("standard_text_field")
+            .onNodeWithTag(TestTags.STANDARD_TEXT_FIELD)
             .assertTextEquals(expectedString)
+    }
+
+    @Test
+    fun enterPassword_toggleVisibility_passwordVisible() {
+        composeTestRule.setContent {
+            var text by remember {
+                mutableStateOf("")
+            }
+            MaterialTheme {
+                StandardTextField(
+                    text = text,
+                    onValueChange = {
+                        text = it
+                    },
+                    maxLength = 5,
+                    keyboardType = KeyboardType.Password,
+                    modifier = Modifier
+                        .semantics {
+                            testTag = TestTags.STANDARD_TEXT_FIELD
+                        }
+                )
+            }
+        }
+
+        composeTestRule
+            .onNodeWithTag(TestTags.STANDARD_TEXT_FIELD)
+            .performTextInput("12345")
+
+
     }
 }
