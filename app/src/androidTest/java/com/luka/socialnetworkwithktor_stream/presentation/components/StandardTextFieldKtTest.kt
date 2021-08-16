@@ -96,11 +96,7 @@ class StandardTextFieldTest {
                         text = it
                     },
                     maxLength = 5,
-                    keyboardType = KeyboardType.Password,
-                    modifier = Modifier
-                        .semantics {
-                            testTag = TestTags.STANDARD_TEXT_FIELD
-                        }
+                    keyboardType = KeyboardType.Password
                 )
             }
         }

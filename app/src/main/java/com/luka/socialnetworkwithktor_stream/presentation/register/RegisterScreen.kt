@@ -1,16 +1,13 @@
-package com.luka.socialnetworkwithktor_stream.presentation.login
+package com.luka.socialnetworkwithktor_stream.presentation.register
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withStyle
@@ -19,12 +16,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.luka.socialnetworkwithktor_stream.R
 import com.luka.socialnetworkwithktor_stream.presentation.components.StandardTextField
+import com.luka.socialnetworkwithktor_stream.presentation.login.LoginViewModel
 import com.luka.socialnetworkwithktor_stream.presentation.ui.theme.SpaceLarge
 import com.luka.socialnetworkwithktor_stream.presentation.ui.theme.SpaceMedium
 import com.luka.socialnetworkwithktor_stream.presentation.ui.theme.SpaceSmall
+import com.luka.socialnetworkwithktor_stream.presentation.util.Screen
 
 @Composable
-fun LoginScreen(
+fun Screen.RegisterScreen(
     navController: NavController,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
@@ -56,7 +55,6 @@ fun LoginScreen(
                 onValueChange = {
                     viewModel.setUsernameText(it)
                 },
-                error = viewModel.usernameError.value,
                 hint = stringResource(id = R.string.username_hint)
             )
             Spacer(
@@ -68,12 +66,7 @@ fun LoginScreen(
                     viewModel.setPasswordText(it)
                 },
                 hint = stringResource(id = R.string.password_hint),
-                keyboardType = KeyboardType.Password,
-                error = viewModel.passwordError.value,
-                showPasswordToggle = viewModel.showPassword.value,
-                onPasswordToggleClick = {
-                    viewModel.setShowPassword(it)
-                }
+                keyboardType = KeyboardType.Password
             )
         }
         Text(
